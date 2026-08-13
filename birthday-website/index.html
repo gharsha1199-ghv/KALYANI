@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Happy Birthday Kalyani! 🎉</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Audio Element -->
+    <audio id="bg-music" loop>
+        <source src="assets/audio/birthday-song.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Music Control UI -->
+    <div id="music-control" class="hidden">
+        <button id="play-pause-btn" aria-label="Play/Pause Music">🎵</button>
+    </div>
+
+    <!-- Scene 1: Opening Popup -->
+    <section id="scene-opening" class="scene active-scene">
+        <div class="particles" id="particles-opening"></div>
+        <div class="content-box glass-effect">
+            <h1 class="glow-text">Happy Birthday, Kalyani! 🎉</h1>
+            <h2 class="glow-text-sub">Cheers to 24! 🥂💙</h2>
+            <p class="fade-in-text">A little journey through some beautiful memories...</p>
+            <button id="btn-open-surprise" class="primary-btn pulse">Open Your Surprise ✨</button>
+        </div>
+    </section>
+
+    <!-- Scene 2: Cake Scene -->
+    <section id="scene-cake" class="scene hidden">
+        <div class="instruction">
+            <p>Your birthday cake is waiting for you 🎂</p>
+            <p class="small-text">Pick up the knife and cut the cake!</p>
+        </div>
+        
+        <div class="cake-container">
+            <div id="cake" class="cake">
+                <div class="candles" id="candles-container"></div>
+                <!-- Cake visually built with CSS/JS -->
+                <div class="cake-top"></div>
+                <div class="cake-bottom"></div>
+            </div>
+            
+            <div id="cake-pieces" class="hidden">
+                <div class="cake-piece piece-1" draggable="false"></div>
+                <div class="cake-piece piece-2" draggable="false"></div>
+                <div class="cake-piece piece-3" draggable="false"></div>
+            </div>
+            
+            <div id="knife" class="knife" draggable="false">
+                <div class="knife-handle"></div>
+                <div class="knife-blade"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scene 3: Family Sharing -->
+    <section id="scene-family" class="scene hidden">
+        <div class="instruction">
+            <p>A birthday cake is meant to be shared with the people who make life special. 💙</p>
+            <p class="small-text">Drag a piece of cake to each family member.</p>
+        </div>
+        
+        <div class="family-container">
+            <div class="family-member" id="target-dad" data-member="dad">
+                <div class="card glass-effect">
+                    <img src="assets/family/dad.jpg" alt="Dad" class="family-img" onerror="this.src='https://via.placeholder.com/150/000000/FFFFFF?text=Dad'">
+                    <h3>Dad</h3>
+                </div>
+            </div>
+            <div class="family-member" id="target-mother" data-member="mother">
+                <div class="card glass-effect">
+                    <img src="assets/family/mother.jpg" alt="Mother" class="family-img" onerror="this.src='https://via.placeholder.com/150/000000/FFFFFF?text=Mother'">
+                    <h3>Mother</h3>
+                </div>
+            </div>
+            <div class="family-member" id="target-brother" data-member="brother">
+                <div class="card glass-effect">
+                    <img src="assets/family/brother.jpg" alt="Brother" class="family-img" onerror="this.src='https://via.placeholder.com/150/000000/FFFFFF?text=Brother'">
+                    <h3>Brother</h3>
+                </div>
+            </div>
+        </div>
+        
+        <div class="draggable-cake-pieces" id="draggable-pieces-container">
+            <!-- Populated dynamically via JS from previous scene -->
+        </div>
+
+        <div id="family-success-message" class="success-message"></div>
+        <button id="btn-continue-journey" class="primary-btn hidden fade-in">Continue the Journey →</button>
+    </section>
+
+    <!-- Scene 4: Memory Journey -->
+    <section id="scene-memories" class="scene hidden">
+        <div class="memory-header glass-effect">
+            <h2>Your Memory Journey</h2>
+            <p id="memory-counter">Memory 0 of 0</p>
+        </div>
+        
+        <div class="timeline" id="timeline-container">
+            <!-- Injected via JavaScript -->
+        </div>
+        
+        <div class="timeline-end">
+            <button id="btn-to-finale" class="primary-btn">One last thing... ✨</button>
+        </div>
+    </section>
+
+    <!-- Lightbox for Photos -->
+    <div id="lightbox" class="hidden">
+        <div class="lightbox-content">
+            <button id="lightbox-close">&times;</button>
+            <img id="lightbox-img" src="" alt="Memory full screen">
+            <div class="lightbox-info glass-effect">
+                <p id="lightbox-date" class="date"></p>
+                <p id="lightbox-caption" class="caption"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scene 5: Finale -->
+    <section id="scene-finale" class="scene hidden">
+        <div class="particles" id="particles-finale"></div>
+        <div class="content-box glass-effect text-center finale-box">
+            <h1 class="glow-text">Happy Birthday, Kalyani! 🎂💙</h1>
+            <h2 class="glow-text-sub">Cheers to 24! 🥂</h2>
+            <div class="final-message">
+                <p>May your year be filled with beautiful moments, endless laughter, and all the love you deserve.</p>
+                <p>Keep shining, keep smiling.</p>
+            </div>
+            <button id="btn-replay" class="secondary-btn">Replay the Journey ↻</button>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
