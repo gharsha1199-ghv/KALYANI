@@ -3,137 +3,325 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Happy Birthday Kalyani! 🎉</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <title>Happy Birthday, Kalyani!</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Playfair Display for elegant serif, Great Vibes for cursive neon, Inter for UI -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    
+    <!-- Background Particles -->
+    <div class="particles" id="particles-bg"></div>
+
     <!-- Audio Element -->
     <audio id="bg-music" loop>
         <source src="assets/audio/birthday-song.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- Music Control UI -->
-    <div id="music-control" class="hidden">
-        <button id="play-pause-btn" aria-label="Play/Pause Music">🎵</button>
-    </div>
+    <!-- Global Header -->
+    <header class="global-header">
+    </header>
 
-    <!-- Scene 1: Opening Popup -->
-    <section id="scene-opening" class="scene active-scene">
-        <div class="particles" id="particles-opening"></div>
-        <div class="content-box glass-effect">
-            <h1 class="glow-text">Happy Birthday, Kalyani! 🎉</h1>
-            <h2 class="glow-text-sub">Cheers to 24! 🥂💙</h2>
-            <p class="fade-in-text">A little journey through some beautiful memories...</p>
-            <button id="btn-open-surprise" class="primary-btn pulse">Open Your Surprise ✨</button>
+    <!-- Scene 1: Opening -->
+    <section id="scene-opening" class="scene active">
+        <div class="split-layout">
+            <div class="left-col">
+                <div class="wishes-content">
+                    <h1 class="title-serif">Happy<br>Birthday,</h1>
+                    <h2 class="name-cursive neon-text">Kalyani!</h2>
+                    
+                    <div class="subtitle-container">
+                        <p class="subtitle-serif">Cheers to <span class="highlight">24</span> amazing<br>years of you! ✨</p>
+                        <div class="divider">
+                            <span></span><span class="heart-icon">♡</span><span></span>
+                        </div>
+                    </div>
+                    
+                    <button id="btn-start" class="btn-primary glow-button">
+                        Start the Celebration <span class="arrow">→</span>
+                    </button>
+                </div>
+            </div>
+            <div class="right-col">
+                <div class="bouquet-container">
+                    <img src="assets/images/image.png" alt="Floral Bouquet" class="hero-image">
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- Scene 2: Cake Scene -->
-    <section id="scene-cake" class="scene hidden">
-        <div class="instruction">
-            <p>Your birthday cake is waiting for you 🎂</p>
-            <p class="small-text">Pick up the knife and cut the cake!</p>
+    <!-- Scene 2: Cake & Family -->
+    <section id="scene-cake" class="scene">
+        <div class="scene-cake-header">
+            <h2 class="title-serif"><span class="heart-icon pink">♡</span> Cut the Cake & Share the Happiness <span class="heart-icon pink">♡</span></h2>
+            <p class="subtitle-sans">Cut the cake and share a piece with your family</p>
         </div>
-        
-        <div class="cake-container">
-            <div id="cake" class="cake">
-                <div class="candles" id="candles-container"></div>
-                <!-- Cake visually built with CSS/JS -->
-                <div class="cake-top"></div>
-                <div class="cake-bottom"></div>
+
+        <div class="family-row">
+            <div class="family-member" id="target-mother">
+                <div class="portrait-glow">
+                    <img src="assets/family/mother.jpg" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100\' height=\'100\' fill=\'%23333\'/></svg>'" alt="Mother" class="portrait-img">
+                </div>
+                <h3>Mother</h3>
+                <p class="sub-text">For all the love <span class="heart-icon pink filled">♥</span></p>
             </div>
             
-            <div id="cake-pieces" class="hidden">
-                <div class="cake-piece piece-1" draggable="false"></div>
-                <div class="cake-piece piece-2" draggable="false"></div>
-                <div class="cake-piece piece-3" draggable="false"></div>
+            <div class="family-member" id="target-father">
+                <div class="portrait-glow">
+                    <img src="assets/family/dad.jpg" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100\' height=\'100\' fill=\'%23333\'/></svg>'" alt="Father" class="portrait-img">
+                </div>
+                <h3>Father</h3>
+                <p class="sub-text">For all the support <span class="heart-icon pink filled">♥</span></p>
             </div>
-            
-            <div id="knife" class="knife" draggable="false">
-                <div class="knife-handle"></div>
-                <div class="knife-blade"></div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Scene 3: Family Sharing -->
-    <section id="scene-family" class="scene hidden">
-        <div class="instruction">
-            <p>A birthday cake is meant to be shared with the people who make life special. 💙</p>
-            <p class="small-text">Drag a piece of cake to each family member.</p>
+            <div class="family-member" id="target-brother">
+                <div class="portrait-glow">
+                    <img src="assets/family/brother.jpg" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100\' height=\'100\' fill=\'%23333\'/></svg>'" alt="Surya" class="portrait-img">
+                </div>
+                <h3>Surya</h3>
+                <p class="sub-text">For all the fun <span class="heart-icon pink filled">♥</span></p>
+            </div>
         </div>
-        
-        <div class="family-container">
-            <div class="family-member" id="target-dad" data-member="dad">
-                <div class="card glass-effect">
-                    <img src="assets/family/dad.jpg" alt="Dad" class="family-img" onerror="this.src='https://via.placeholder.com/150/000000/FFFFFF?text=Dad'">
-                    <h3>Dad</h3>
+
+        <div class="action-area">
+            <div class="instructions-box">
+                <div class="inst-row">
+                    <span class="icon knife-icon">🔪</span>
+                    <p>Drag the knife<br>to cut the cake</p>
+                </div>
+                <div class="inst-row">
+                    <span class="icon cake-icon">🍰</span>
+                    <p>Then drag a piece<br>to your family members</p>
                 </div>
             </div>
-            <div class="family-member" id="target-mother" data-member="mother">
-                <div class="card glass-effect">
-                    <img src="assets/family/mother.jpg" alt="Mother" class="family-img" onerror="this.src='https://via.placeholder.com/150/000000/FFFFFF?text=Mother'">
-                    <h3>Mother</h3>
+
+            <div class="cake-container">
+                <!-- CSS Cake Wrapper -->
+                <div id="cake-wrapper" class="css-cake">
+                    <div class="cake-surface">
+                        <span class="cake-name name-cursive">Sharjina</span>
+                        <div class="candles">
+                            <div class="candle" style="--angle: 0deg;"></div>
+                            <div class="candle" style="--angle: 30deg;"></div>
+                            <div class="candle" style="--angle: 60deg;"></div>
+                            <div class="candle" style="--angle: 90deg;"></div>
+
+                            <div class="candle" style="--angle: 120deg;"></div>
+                            <div class="candle" style="--angle: 150deg;"></div>
+                            <div class="candle" style="--angle: 180deg;"></div>
+                            <div class="candle" style="--angle: 210deg;"></div>
+
+                            <div class="candle" style="--angle: 240deg;"></div>
+                            <div class="candle" style="--angle: 270deg;"></div>
+
+                            <div class="candle" style="--angle: 300deg;"></div>
+                            <div class="candle" style="--angle: 330deg;"></div>
+
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- The cake pieces (hidden initially) -->
+                                <div id="cake-pieces" class="hidden">
+                    <div class="cake-piece piece-1" id="piece-1">
+                        <div class="cake-surface">
+                            <span class="cake-name name-cursive">Sharjina</span>
+                            <div class="candles">
+                                <div class="candle" style="--angle: 0deg;"></div>
+                                <div class="candle" style="--angle: 30deg;"></div>
+                                <div class="candle" style="--angle: 60deg;"></div>
+                                <div class="candle" style="--angle: 90deg;"></div>
+                                <div class="candle" style="--angle: 120deg;"></div>
+                                <div class="candle" style="--angle: 150deg;"></div>
+                                <div class="candle" style="--angle: 180deg;"></div>
+                                <div class="candle" style="--angle: 210deg;"></div>
+                                <div class="candle" style="--angle: 240deg;"></div>
+                                <div class="candle" style="--angle: 270deg;"></div>
+                                <div class="candle" style="--angle: 300deg;"></div>
+                                <div class="candle" style="--angle: 330deg;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cake-piece piece-2" id="piece-2">
+                        <div class="cake-surface">
+                            <span class="cake-name name-cursive">Sharjina</span>
+                            <div class="candles">
+                                <div class="candle" style="--angle: 0deg;"></div>
+                                <div class="candle" style="--angle: 30deg;"></div>
+                                <div class="candle" style="--angle: 60deg;"></div>
+                                <div class="candle" style="--angle: 90deg;"></div>
+                                <div class="candle" style="--angle: 120deg;"></div>
+                                <div class="candle" style="--angle: 150deg;"></div>
+                                <div class="candle" style="--angle: 180deg;"></div>
+                                <div class="candle" style="--angle: 210deg;"></div>
+                                <div class="candle" style="--angle: 240deg;"></div>
+                                <div class="candle" style="--angle: 270deg;"></div>
+                                <div class="candle" style="--angle: 300deg;"></div>
+                                <div class="candle" style="--angle: 330deg;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cake-piece piece-3" id="piece-3">
+                        <div class="cake-surface">
+                            <span class="cake-name name-cursive">Sharjina</span>
+                            <div class="candles">
+                                <div class="candle" style="--angle: 0deg;"></div>
+                                <div class="candle" style="--angle: 30deg;"></div>
+                                <div class="candle" style="--angle: 60deg;"></div>
+                                <div class="candle" style="--angle: 90deg;"></div>
+                                <div class="candle" style="--angle: 120deg;"></div>
+                                <div class="candle" style="--angle: 150deg;"></div>
+                                <div class="candle" style="--angle: 180deg;"></div>
+                                <div class="candle" style="--angle: 210deg;"></div>
+                                <div class="candle" style="--angle: 240deg;"></div>
+                                <div class="candle" style="--angle: 270deg;"></div>
+                                <div class="candle" style="--angle: 300deg;"></div>
+                                <div class="candle" style="--angle: 330deg;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cake-piece piece-4" id="piece-4">
+                        <div class="cake-surface">
+                            <span class="cake-name name-cursive">Sharjina</span>
+                            <div class="candles">
+                                <div class="candle" style="--angle: 0deg;"></div>
+                                <div class="candle" style="--angle: 30deg;"></div>
+                                <div class="candle" style="--angle: 60deg;"></div>
+                                <div class="candle" style="--angle: 90deg;"></div>
+                                <div class="candle" style="--angle: 120deg;"></div>
+                                <div class="candle" style="--angle: 150deg;"></div>
+                                <div class="candle" style="--angle: 180deg;"></div>
+                                <div class="candle" style="--angle: 210deg;"></div>
+                                <div class="candle" style="--angle: 240deg;"></div>
+                                <div class="candle" style="--angle: 270deg;"></div>
+                                <div class="candle" style="--angle: 300deg;"></div>
+                                <div class="candle" style="--angle: 330deg;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cake-piece piece-5" id="piece-5">
+                        <div class="cake-surface">
+                            <span class="cake-name name-cursive">Sharjina</span>
+                            <div class="candles">
+                                <div class="candle" style="--angle: 0deg;"></div>
+                                <div class="candle" style="--angle: 30deg;"></div>
+                                <div class="candle" style="--angle: 60deg;"></div>
+                                <div class="candle" style="--angle: 90deg;"></div>
+                                <div class="candle" style="--angle: 120deg;"></div>
+                                <div class="candle" style="--angle: 150deg;"></div>
+                                <div class="candle" style="--angle: 180deg;"></div>
+                                <div class="candle" style="--angle: 210deg;"></div>
+                                <div class="candle" style="--angle: 240deg;"></div>
+                                <div class="candle" style="--angle: 270deg;"></div>
+                                <div class="candle" style="--angle: 300deg;"></div>
+                                <div class="candle" style="--angle: 330deg;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cake-piece piece-6" id="piece-6">
+                        <div class="cake-surface">
+                            <span class="cake-name name-cursive">Sharjina</span>
+                            <div class="candles">
+                                <div class="candle" style="--angle: 0deg;"></div>
+                                <div class="candle" style="--angle: 30deg;"></div>
+                                <div class="candle" style="--angle: 60deg;"></div>
+                                <div class="candle" style="--angle: 90deg;"></div>
+                                <div class="candle" style="--angle: 120deg;"></div>
+                                <div class="candle" style="--angle: 150deg;"></div>
+                                <div class="candle" style="--angle: 180deg;"></div>
+                                <div class="candle" style="--angle: 210deg;"></div>
+                                <div class="candle" style="--angle: 240deg;"></div>
+                                <div class="candle" style="--angle: 270deg;"></div>
+                                <div class="candle" style="--angle: 300deg;"></div>
+                                <div class="candle" style="--angle: 330deg;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cake-piece piece-7" id="piece-7">
+                        <div class="cake-surface">
+                            <span class="cake-name name-cursive">Sharjina</span>
+                            <div class="candles">
+                                <div class="candle" style="--angle: 0deg;"></div>
+                                <div class="candle" style="--angle: 30deg;"></div>
+                                <div class="candle" style="--angle: 60deg;"></div>
+                                <div class="candle" style="--angle: 90deg;"></div>
+                                <div class="candle" style="--angle: 120deg;"></div>
+                                <div class="candle" style="--angle: 150deg;"></div>
+                                <div class="candle" style="--angle: 180deg;"></div>
+                                <div class="candle" style="--angle: 210deg;"></div>
+                                <div class="candle" style="--angle: 240deg;"></div>
+                                <div class="candle" style="--angle: 270deg;"></div>
+                                <div class="candle" style="--angle: 300deg;"></div>
+                                <div class="candle" style="--angle: 330deg;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cake-piece piece-8" id="piece-8">
+                        <div class="cake-surface">
+                            <span class="cake-name name-cursive">Sharjina</span>
+                            <div class="candles">
+                                <div class="candle" style="--angle: 0deg;"></div>
+                                <div class="candle" style="--angle: 30deg;"></div>
+                                <div class="candle" style="--angle: 60deg;"></div>
+                                <div class="candle" style="--angle: 90deg;"></div>
+                                <div class="candle" style="--angle: 120deg;"></div>
+                                <div class="candle" style="--angle: 150deg;"></div>
+                                <div class="candle" style="--angle: 180deg;"></div>
+                                <div class="candle" style="--angle: 210deg;"></div>
+                                <div class="candle" style="--angle: 240deg;"></div>
+                                <div class="candle" style="--angle: 270deg;"></div>
+                                <div class="candle" style="--angle: 300deg;"></div>
+                                <div class="candle" style="--angle: 330deg;"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="family-member" id="target-brother" data-member="brother">
-                <div class="card glass-effect">
-                    <img src="assets/family/brother.jpg" alt="Brother" class="family-img" onerror="this.src='https://via.placeholder.com/150/000000/FFFFFF?text=Brother'">
-                    <h3>Brother</h3>
+
+            <div class="knife-tray-container">
+                <div class="drag-hint cursive-hint">Drag me! ⤵</div>
+                <div class="tray-background">
+                    <svg id="realistic-knife" class="draggable-knife" viewBox="0 0 200 40" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="blade-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" style="stop-color:#f8f9fa;stop-opacity:1" />
+                                <stop offset="50%" style="stop-color:#ced4da;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#6c757d;stop-opacity:1" />
+                            </linearGradient>
+                            <linearGradient id="handle-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" style="stop-color:#5c3a21;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#3e2723;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <!-- Handle -->
+                        <rect x="10" y="10" width="70" height="20" rx="4" fill="url(#handle-grad)"/>
+                        <circle cx="30" cy="20" r="2.5" fill="#adb5bd"/>
+                        <circle cx="60" cy="20" r="2.5" fill="#adb5bd"/>
+                        <!-- Blade -->
+                        <path d="M80,12 L190,14 Q198,15 198,20 Q198,28 170,30 L80,28 Z" fill="url(#blade-grad)"/>
+                        <!-- Blade Edge -->
+                        <path d="M80,20 L198,20 Q198,28 170,30 L80,28 Z" fill="#fff" opacity="0.6"/>
+                    </svg>
                 </div>
             </div>
         </div>
-        
-        <div class="draggable-cake-pieces" id="draggable-pieces-container">
-            <!-- Populated dynamically via JS from previous scene -->
-        </div>
 
-        <div id="family-success-message" class="success-message"></div>
-        <button id="btn-continue-journey" class="primary-btn hidden fade-in">Continue the Journey →</button>
+        <button id="btn-back" class="btn-secondary">
+            ← Back to Wishes
+        </button>
     </section>
 
-    <!-- Scene 4: Memory Journey -->
-    <section id="scene-memories" class="scene hidden">
-        <div class="memory-header glass-effect">
-            <h2>Your Memory Journey</h2>
-            <p id="memory-counter">Memory 0 of 0</p>
-        </div>
-        
-        <div class="timeline" id="timeline-container">
-            <!-- Injected via JavaScript -->
-        </div>
-        
-        <div class="timeline-end">
-            <button id="btn-to-finale" class="primary-btn">One last thing... ✨</button>
-        </div>
-    </section>
-
-    <!-- Lightbox for Photos -->
-    <div id="lightbox" class="hidden">
-        <div class="lightbox-content">
-            <button id="lightbox-close">&times;</button>
-            <img id="lightbox-img" src="" alt="Memory full screen">
-            <div class="lightbox-info glass-effect">
-                <p id="lightbox-date" class="date"></p>
-                <p id="lightbox-caption" class="caption"></p>
-            </div>
-        </div>
+    <!-- Success Overlay -->
+    <div id="success-overlay" class="hidden">
+        <h2 class="title-serif neon-text">All pieces shared!</h2>
+        <p class="subtitle-serif">Happy 24th Birthday, Kalyani.</p>
+        <button id="btn-replay" class="btn-primary glow-button" style="margin-top: 20px;">Celebrate Again ↻</button>
     </div>
-
-    <!-- Scene 5: Finale -->
-    <section id="scene-finale" class="scene hidden">
-        <div class="particles" id="particles-finale"></div>
-        <div class="content-box glass-effect text-center finale-box">
-            <h1 class="glow-text">Happy Birthday, Kalyani! 🎂💙</h1>
-            <h2 class="glow-text-sub">Cheers to 24! 🥂</h2>
-            <div class="final-message">
-                <p>May your year be filled with beautiful moments, endless laughter, and all the love you deserve.</p>
-                <p>Keep shining, keep smiling.</p>
-            </div>
-            <button id="btn-replay" class="secondary-btn">Replay the Journey ↻</button>
-        </div>
-    </section>
 
     <script src="script.js"></script>
 </body>
