@@ -530,8 +530,26 @@ document.addEventListener("DOMContentLoaded", () => {
     const particlesContainer = document.getElementById('intro-particles-container');
 
     if (introOverlay && mainPage) {
-        // Run sequence
-        setTimeout(() => runCountdown(3), 500);
+        const startScreen = document.getElementById('initial-start-screen');
+        const btnInitialStart = document.getElementById('btn-initial-start');
+
+        if (btnInitialStart) {
+            btnInitialStart.addEventListener('click', () => {
+                startScreen.style.display = 'none';
+                countdownEl.style.display = 'block';
+                
+                // Initialize audio context on first click to unlock audio
+                try {
+                    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                    ctx.resume();
+                } catch(e) {}
+
+                // Run sequence
+                setTimeout(() => runCountdown(3), 500);
+            });
+        } else {
+            setTimeout(() => runCountdown(3), 500);
+        }
 
         function runCountdown(num) {
             if (num > 0) {
