@@ -15,7 +15,162 @@
     <link rel="stylesheet" href="birthday-website/style.css">
 </head>
 <body>
-    
+    <!-- Intro Overlay -->
+    <div id="birthday-intro">
+        <!-- Envelope Flaps -->
+        <div class="intro-flap flap-top"></div>
+        <div class="intro-flap flap-bottom"></div>
+        <div class="intro-flap flap-left"></div>
+        <div class="intro-flap flap-right"></div>
+        
+        <div id="intro-countdown" class="intro-countdown"></div>
+        <div id="intro-balloons-container" class="hidden">
+            <div class="intro-balloon-wrapper balloon-pos-center">
+                <svg class="intro-balloon" viewBox="0 0 100 250" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <radialGradient id="balloon-grad-1" cx="30%" cy="30%" r="70%">
+                            <stop offset="0%" stop-color="#fff0f3" />
+                            <stop offset="30%" stop-color="#ffb5a7" />
+                            <stop offset="70%" stop-color="#ff8fa3" />
+                            <stop offset="100%" stop-color="#ff4d6d" />
+                        </radialGradient>
+                        <radialGradient id="balloon-highlight-1" cx="20%" cy="20%" r="40%">
+                            <stop offset="0%" stop-color="white" stop-opacity="0.8"/>
+                            <stop offset="100%" stop-color="white" stop-opacity="0"/>
+                        </radialGradient>
+                    </defs>
+                    <path d="M 50 140 Q 40 180 50 200 T 50 250" fill="none" stroke="#e0e0e0" stroke-width="1.5" />
+                    <path d="M 45 138 L 55 138 L 53 145 L 47 145 Z" fill="#ff4d6d" />
+                    <path d="M 50 10 C 15 10 10 50 10 80 C 10 120 40 140 50 140 C 60 140 90 120 90 80 C 90 50 85 10 50 10 Z" fill="url(#balloon-grad-1)" />
+                    <path d="M 50 10 C 15 10 10 50 10 80 C 10 120 40 140 50 140 C 60 140 90 120 90 80 C 90 50 85 10 50 10 Z" fill="url(#balloon-highlight-1)" />
+                </svg>
+            </div>
+            <div class="intro-balloon-wrapper balloon-pos-left1">
+                <svg class="intro-balloon" viewBox="0 0 100 250" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <radialGradient id="balloon-grad-2" cx="30%" cy="30%" r="70%">
+                            <stop offset="0%" stop-color="#f3e8ff" />
+                            <stop offset="30%" stop-color="#d8b4fe" />
+                            <stop offset="70%" stop-color="#c084fc" />
+                            <stop offset="100%" stop-color="#a855f7" />
+                        </radialGradient>
+                        <radialGradient id="balloon-highlight-2" cx="20%" cy="20%" r="40%">
+                            <stop offset="0%" stop-color="white" stop-opacity="0.8"/>
+                            <stop offset="100%" stop-color="white" stop-opacity="0"/>
+                        </radialGradient>
+                    </defs>
+                    <path d="M 50 140 Q 40 180 50 200 T 50 250" fill="none" stroke="#e0e0e0" stroke-width="1.5" />
+                    <path d="M 45 138 L 55 138 L 53 145 L 47 145 Z" fill="#a855f7" />
+                    <path d="M 50 10 C 15 10 10 50 10 80 C 10 120 40 140 50 140 C 60 140 90 120 90 80 C 90 50 85 10 50 10 Z" fill="url(#balloon-grad-2)" />
+                    <path d="M 50 10 C 15 10 10 50 10 80 C 10 120 40 140 50 140 C 60 140 90 120 90 80 C 90 50 85 10 50 10 Z" fill="url(#balloon-highlight-2)" />
+                </svg>
+            </div>
+            <div class="intro-balloon-wrapper balloon-pos-right1">
+                <svg class="intro-balloon" viewBox="0 0 100 250" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <radialGradient id="balloon-grad-3" cx="30%" cy="30%" r="70%">
+                            <stop offset="0%" stop-color="#fff9e6" />
+                            <stop offset="30%" stop-color="#ffe066" />
+                            <stop offset="70%" stop-color="#ffd166" />
+                            <stop offset="100%" stop-color="#ffb703" />
+                        </radialGradient>
+                        <radialGradient id="balloon-highlight-3" cx="20%" cy="20%" r="40%">
+                            <stop offset="0%" stop-color="white" stop-opacity="0.8"/>
+                            <stop offset="100%" stop-color="white" stop-opacity="0"/>
+                        </radialGradient>
+                    </defs>
+                    <path d="M 50 140 Q 40 180 50 200 T 50 250" fill="none" stroke="#e0e0e0" stroke-width="1.5" />
+                    <path d="M 45 138 L 55 138 L 53 145 L 47 145 Z" fill="#ffb703" />
+                    <path d="M 50 10 C 15 10 10 50 10 80 C 10 120 40 140 50 140 C 60 140 90 120 90 80 C 90 50 85 10 50 10 Z" fill="url(#balloon-grad-3)" />
+                    <path d="M 50 10 C 15 10 10 50 10 80 C 10 120 40 140 50 140 C 60 140 90 120 90 80 C 90 50 85 10 50 10 Z" fill="url(#balloon-highlight-3)" />
+                </svg>
+            </div>
+            <div class="intro-balloon-wrapper balloon-pos-left2">
+                <svg class="intro-balloon" viewBox="0 0 100 250" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <radialGradient id="balloon-grad-4" cx="30%" cy="30%" r="70%">
+                            <stop offset="0%" stop-color="#ffccd5" />
+                            <stop offset="30%" stop-color="#ff8fa3" />
+                            <stop offset="70%" stop-color="#ff4d6d" />
+                            <stop offset="100%" stop-color="#c9184a" />
+                        </radialGradient>
+                        <radialGradient id="balloon-highlight-4" cx="20%" cy="20%" r="40%">
+                            <stop offset="0%" stop-color="white" stop-opacity="0.8"/>
+                            <stop offset="100%" stop-color="white" stop-opacity="0"/>
+                        </radialGradient>
+                    </defs>
+                    <path d="M 50 140 Q 40 180 50 200 T 50 250" fill="none" stroke="#e0e0e0" stroke-width="1.5" />
+                    <path d="M 45 138 L 55 138 L 53 145 L 47 145 Z" fill="#c9184a" />
+                    <path d="M 50 10 C 15 10 10 50 10 80 C 10 120 40 140 50 140 C 60 140 90 120 90 80 C 90 50 85 10 50 10 Z" fill="url(#balloon-grad-4)" />
+                    <path d="M 50 10 C 15 10 10 50 10 80 C 10 120 40 140 50 140 C 60 140 90 120 90 80 C 90 50 85 10 50 10 Z" fill="url(#balloon-highlight-4)" />
+                </svg>
+            </div>
+            <div class="intro-balloon-wrapper balloon-pos-right2">
+                <svg class="intro-balloon" viewBox="0 0 100 250" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <radialGradient id="balloon-grad-5" cx="30%" cy="30%" r="70%">
+                            <stop offset="0%" stop-color="#e0fbfc" />
+                            <stop offset="30%" stop-color="#98c1d9" />
+                            <stop offset="70%" stop-color="#48cae4" />
+                            <stop offset="100%" stop-color="#0077b6" />
+                        </radialGradient>
+                        <radialGradient id="balloon-highlight-5" cx="20%" cy="20%" r="40%">
+                            <stop offset="0%" stop-color="white" stop-opacity="0.8"/>
+                            <stop offset="100%" stop-color="white" stop-opacity="0"/>
+                        </radialGradient>
+                    </defs>
+                    <path d="M 50 140 Q 40 180 50 200 T 50 250" fill="none" stroke="#e0e0e0" stroke-width="1.5" />
+                    <path d="M 45 138 L 55 138 L 53 145 L 47 145 Z" fill="#0077b6" />
+                    <path d="M 50 10 C 15 10 10 50 10 80 C 10 120 40 140 50 140 C 60 140 90 120 90 80 C 90 50 85 10 50 10 Z" fill="url(#balloon-grad-5)" />
+                    <path d="M 50 10 C 15 10 10 50 10 80 C 10 120 40 140 50 140 C 60 140 90 120 90 80 C 90 50 85 10 50 10 Z" fill="url(#balloon-highlight-5)" />
+                </svg>
+            </div>
+            <div class="intro-balloon-wrapper balloon-pos-left3">
+                <svg class="intro-balloon" viewBox="0 0 100 250" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <radialGradient id="balloon-grad-6" cx="30%" cy="30%" r="70%">
+                            <stop offset="0%" stop-color="#fff0f3" />
+                            <stop offset="30%" stop-color="#ffb5a7" />
+                            <stop offset="70%" stop-color="#ff8fa3" />
+                            <stop offset="100%" stop-color="#ff4d6d" />
+                        </radialGradient>
+                        <radialGradient id="balloon-highlight-6" cx="20%" cy="20%" r="40%">
+                            <stop offset="0%" stop-color="white" stop-opacity="0.8"/>
+                            <stop offset="100%" stop-color="white" stop-opacity="0"/>
+                        </radialGradient>
+                    </defs>
+                    <path d="M 50 140 Q 40 180 50 200 T 50 250" fill="none" stroke="#e0e0e0" stroke-width="1.5" />
+                    <path d="M 45 138 L 55 138 L 53 145 L 47 145 Z" fill="#ff4d6d" />
+                    <path d="M 50 10 C 15 10 10 50 10 80 C 10 120 40 140 50 140 C 60 140 90 120 90 80 C 90 50 85 10 50 10 Z" fill="url(#balloon-grad-6)" />
+                    <path d="M 50 10 C 15 10 10 50 10 80 C 10 120 40 140 50 140 C 60 140 90 120 90 80 C 90 50 85 10 50 10 Z" fill="url(#balloon-highlight-6)" />
+                </svg>
+            </div>
+            <div class="intro-balloon-wrapper balloon-pos-right3">
+                <svg class="intro-balloon" viewBox="0 0 100 250" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <radialGradient id="balloon-grad-7" cx="30%" cy="30%" r="70%">
+                            <stop offset="0%" stop-color="#f3e8ff" />
+                            <stop offset="30%" stop-color="#d8b4fe" />
+                            <stop offset="70%" stop-color="#c084fc" />
+                            <stop offset="100%" stop-color="#a855f7" />
+                        </radialGradient>
+                        <radialGradient id="balloon-highlight-7" cx="20%" cy="20%" r="40%">
+                            <stop offset="0%" stop-color="white" stop-opacity="0.8"/>
+                            <stop offset="100%" stop-color="white" stop-opacity="0"/>
+                        </radialGradient>
+                    </defs>
+                    <path d="M 50 140 Q 40 180 50 200 T 50 250" fill="none" stroke="#e0e0e0" stroke-width="1.5" />
+                    <path d="M 45 138 L 55 138 L 53 145 L 47 145 Z" fill="#a855f7" />
+                    <path d="M 50 10 C 15 10 10 50 10 80 C 10 120 40 140 50 140 C 60 140 90 120 90 80 C 90 50 85 10 50 10 Z" fill="url(#balloon-grad-7)" />
+                    <path d="M 50 10 C 15 10 10 50 10 80 C 10 120 40 140 50 140 C 60 140 90 120 90 80 C 90 50 85 10 50 10 Z" fill="url(#balloon-highlight-7)" />
+                </svg>
+            </div>
+            <div class="balloon-instruction">Tap any balloon! 🎈</div>
+        </div> </div> </div>
+        <div id="intro-particles-container"></div>
+    </div>
+
+    <main id="birthday-page">
     <!-- Background Particles -->
     <div class="particles" id="particles-bg"></div>
 
@@ -66,7 +221,7 @@
         <div class="family-row">
             <div class="family-member" id="target-mother">
                 <div class="portrait-glow">
-                    <img src="birthday-website/assets/family/mother.jpg" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100\' height=\'100\' fill=\'%23333\'/></svg>'" alt="Mother" class="portrait-img">
+                    <img src="birthday-website/assets/family/mother.png" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100\' height=\'100\' fill=\'%23333\'/></svg>'" alt="Mother" class="portrait-img">
                 </div>
                 <h3>Mother</h3>
                 <p class="sub-text">For all the love <span class="heart-icon pink filled">♥</span></p>
@@ -74,7 +229,7 @@
             
             <div class="family-member" id="target-father">
                 <div class="portrait-glow">
-                    <img src="birthday-website/assets/family/dad.jpg" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100\' height=\'100\' fill=\'%23333\'/></svg>'" alt="Father" class="portrait-img">
+                    <img src="birthday-website/assets/family/dad.png" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100\' height=\'100\' fill=\'%23333\'/></svg>'" alt="Father" class="portrait-img">
                 </div>
                 <h3>Father</h3>
                 <p class="sub-text">For all the support <span class="heart-icon pink filled">♥</span></p>
@@ -82,7 +237,7 @@
 
             <div class="family-member" id="target-brother">
                 <div class="portrait-glow">
-                    <img src="birthday-website/assets/family/brother.jpg" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100\' height=\'100\' fill=\'%23333\'/></svg>'" alt="Surya" class="portrait-img">
+                    <img src="birthday-website/assets/family/brother.png" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100\' height=\'100\' fill=\'%23333\'/></svg>'" alt="Surya" class="portrait-img">
                 </div>
                 <h3>Surya</h3>
                 <p class="sub-text">For all the fun <span class="heart-icon pink filled">♥</span></p>
@@ -312,9 +467,9 @@
             </div>
         </div>
 
-        <button id="btn-back" class="btn-secondary">
+        <!-- <button id="btn-back" class="btn-secondary">
             ← Back to Wishes
-        </button>
+        </button> -->
     </section>
 
     <!-- Success Overlay -->
@@ -338,11 +493,12 @@
             </div>
         </div>
 
-        <button id="btn-back-gallery" class="btn-secondary">
+        <!-- <button id="btn-back-gallery" class="btn-secondary">
             ← Back to Celebration
-        </button>
+        </button> -->
     </section>
 
     <script src="birthday-website/script.js"></script>
+    </main>
 </body>
 </html>

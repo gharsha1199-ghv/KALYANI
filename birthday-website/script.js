@@ -522,6 +522,171 @@ document.addEventListener("DOMContentLoaded", () => {
     const bgMusic = document.getElementById('bg-music');
     let isMusicPlaying = false;
 
+    // --- Intro Overlay Sequence ---
+    const introOverlay = document.getElementById('birthday-intro');
+    const mainPage = document.getElementById('birthday-page');
+    const countdownEl = document.getElementById('intro-countdown');
+    const balloonsContainer = document.getElementById('intro-balloons-container');
+    const particlesContainer = document.getElementById('intro-particles-container');
+
+    if (introOverlay && mainPage) {
+        // Run sequence
+        setTimeout(() => runCountdown(3), 500);
+
+        function runCountdown(num) {
+            if (num > 0) {
+                countdownEl.innerText = num;
+                countdownEl.classList.remove('animate');
+                // trigger reflow
+                void countdownEl.offsetWidth;
+                countdownEl.classList.add('animate');
+                playTickSound();
+                setTimeout(() => runCountdown(num - 1), 1000);
+            } else {
+                countdownEl.style.display = 'none';
+                balloonsContainer.classList.remove('hidden');
+                setTimeout(() => balloonsContainer.classList.add('float-up'), 50);
+            }
+        }
+
+        // Balloon pop logic
+        balloonsContainer.addEventListener('pointerdown', (e) => {
+            if (balloonsContainer.classList.contains('popped')) return;
+            
+            balloonsContainer.classList.add('popped');
+            
+            // Blast each balloon from its exact location!
+            const allBalloons = document.querySelectorAll('.intro-balloon-wrapper');
+            allBalloons.forEach(b => {
+                const rect = b.getBoundingClientRect();
+                const x = rect.left + rect.width / 2;
+                const y = rect.top + rect.height / 2;
+                createPopParticles(x, y); // emits 100 particles per balloon!
+            });
+            
+            playPopSound(); // Play blast sound
+
+            // Pop effect delay before revealing site
+            setTimeout(() => {
+                introOverlay.classList.add('hidden');
+                mainPage.classList.add('visible');
+                
+                // Try to play music if user interacted
+                if (!isMusicPlaying) {
+                    bgMusic.play().then(() => {
+                        isMusicPlaying = true;
+                    }).catch(e => console.log("Audio play prevented on intro click"));
+                }
+            }, 600);
+        });
+
+        function createPopParticles(x, y) {
+            const colors = ['#ff4d6d', '#ffb5a7', '#ffbe0b', '#8338ec', '#3a86ff', '#06d6a0', '#ff006e', '#ffd166', '#ffffff'];
+            const shapes = ['square', 'circle', 'heart', 'sparkle', 'square', 'circle']; // more paper than hearts
+            const screenDiag = Math.sqrt(window.innerWidth ** 2 + window.innerHeight ** 2);
+            
+            for (let i = 0; i < 100; i++) {
+                const p = document.createElement('div');
+                const shape = shapes[Math.floor(Math.random() * shapes.length)];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                
+                p.className = 'intro-particle ' + shape;
+                
+                if (shape === 'heart') {
+                    p.innerText = Math.random() > 0.5 ? '♥' : '♡';
+                    p.style.color = color;
+                    p.style.background = 'transparent';
+                } else if (shape === 'sparkle') {
+                    p.innerText = Math.random() > 0.5 ? '✦' : '✧';
+                    p.style.color = color;
+                    p.style.background = 'transparent';
+                    p.style.fontSize = (Math.random() * 1.5 + 1) + 'rem';
+                } else {
+                    const size = Math.random() * 15 + 6;
+                    p.style.width = size + 'px';
+                    p.style.height = size + 'px';
+                    p.style.background = color;
+                    if (shape === 'circle') {
+                        p.style.borderRadius = '50%';
+                    }
+                }
+
+                p.style.left = x + 'px';
+                p.style.top = y + 'px';
+
+                const angle = Math.random() * Math.PI * 2;
+                // Burst radius
+                const velocity = (Math.random() * 0.8 + 0.2) * (screenDiag / 2.5);
+                
+                // Peak of the burst
+                const tx = Math.cos(angle) * velocity;
+                const ty = Math.sin(angle) * velocity - (Math.random() * 200); // bias upwards slightly
+                
+                // Wind drift while falling
+                const drift = (Math.random() - 0.5) * 400;
+
+                p.style.setProperty('--tx', tx + 'px');
+                p.style.setProperty('--ty', ty + 'px');
+                p.style.setProperty('--drift', drift + 'px');
+                
+                // Longer duration for falling effect
+                const duration = Math.random() * 3 + 3; // 3 to 6 seconds!
+                p.style.animationDuration = duration + 's';
+
+                particlesContainer.appendChild(p);
+            }
+        }
+
+
+        function playTickSound() {
+            try {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                const ctx = new AudioContext();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(800, ctx.currentTime);
+                
+                gain.gain.setValueAtTime(0.2, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.1);
+                
+                osc.start();
+                osc.stop(ctx.currentTime + 0.1);
+            } catch(e) {
+                // Silently fail if browser blocks audio before user interaction
+            }
+        }
+
+        function playPopSound() {
+            try {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                const ctx = new AudioContext();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                
+                osc.type = 'square';
+                osc.frequency.setValueAtTime(150, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(40, ctx.currentTime + 0.15);
+                
+                gain.gain.setValueAtTime(1, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.15);
+                
+                osc.start();
+                osc.stop(ctx.currentTime + 0.2);
+            } catch(e) {
+                console.log("Audio error:", e);
+            }
+        }
+    }
+
+
     // --- Particles Background ---
     function createParticles() {
         const container = document.getElementById('particles-bg');
@@ -592,13 +757,16 @@ document.addEventListener("DOMContentLoaded", () => {
         if (particlesBg) particlesBg.classList.add('hidden');
     });
 
-    document.getElementById('btn-back').addEventListener('click', () => {
-        document.getElementById('scene-cake').classList.remove('active');
-        document.getElementById('scene-opening').classList.add('active');
-        
-        const particlesBg = document.getElementById('particles-bg');
-        if (particlesBg) particlesBg.classList.remove('hidden');
-    });
+    const btnBack = document.getElementById('btn-back');
+    if (btnBack) {
+        btnBack.addEventListener('click', () => {
+            document.getElementById('scene-cake').classList.remove('active');
+            document.getElementById('scene-opening').classList.add('active');
+            
+            const particlesBg = document.getElementById('particles-bg');
+            if (particlesBg) particlesBg.classList.remove('hidden');
+        });
+    }
 
     // --- Cake Cutting Logic ---
     const knife = document.getElementById('realistic-knife');
@@ -798,7 +966,8 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById(targetId).classList.remove('completed');
         });
         
-        document.getElementById('btn-back').click();
+        const b = document.getElementById('btn-back');
+        if (b) b.click();
     });
 
     // --- Gallery Navigation ---
@@ -815,10 +984,12 @@ document.addEventListener("DOMContentLoaded", () => {
         populateGallery();
     });
 
-    btnBackGallery.addEventListener('click', () => {
-        sceneGallery.classList.remove('active');
-        sceneCake.classList.add('active');
-    });
+    if (btnBackGallery) {
+        btnBackGallery.addEventListener('click', () => {
+            sceneGallery.classList.remove('active');
+            sceneCake.classList.add('active');
+        });
+    }
 
     let galleryPopulated = false;
 
@@ -828,7 +999,31 @@ document.addEventListener("DOMContentLoaded", () => {
         
         const totalImages = 470;
         
+        // Create two sub-containers
+        const gridContainer = document.createElement('div');
+        gridContainer.className = 'gallery-grid';
+        
+        const masonryContainer = document.createElement('div');
+        masonryContainer.className = 'gallery-masonry';
+        
+        galleryContainer.appendChild(gridContainer);
+        galleryContainer.appendChild(masonryContainer);
+        
+        // Pass 1: Images with captions (Grid layout)
         for (let i = 1; i <= totalImages; i++) {
+            if (galleryMemoryTexts[i]) {
+                createGalleryItem(i, gridContainer);
+            }
+        }
+        
+        // Pass 2: Images without captions (Masonry layout)
+        for (let i = 1; i <= totalImages; i++) {
+            if (!galleryMemoryTexts[i]) {
+                createGalleryItem(i, masonryContainer);
+            }
+        }
+        
+        function createGalleryItem(i, targetContainer) {
             const itemDiv = document.createElement('div');
             itemDiv.className = 'gallery-item';
             
@@ -852,7 +1047,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             imgWrapper.appendChild(img);
-
             itemDiv.appendChild(imgWrapper);
 
             // Only add text if you have defined it in galleryMemoryTexts
@@ -863,7 +1057,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 textDiv.innerHTML = `<p>${customText}</p>`;
                 itemDiv.appendChild(textDiv);
             }
-            galleryContainer.appendChild(itemDiv);
+            targetContainer.appendChild(itemDiv);
         }
     }
 
