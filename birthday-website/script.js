@@ -855,12 +855,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
             itemDiv.appendChild(imgWrapper);
 
-            // Always display the text or fallback to the image number
-            const customText = galleryMemoryTexts[i] || `#${i}`;
-            const textDiv = document.createElement('div');
-            textDiv.className = 'gallery-text';
-            textDiv.innerHTML = `<p>${customText}</p>`;
-            itemDiv.appendChild(textDiv);
+            // Only add text if you have defined it in galleryMemoryTexts
+            const customText = galleryMemoryTexts[i];
+            if (customText) {
+                const textDiv = document.createElement('div');
+                textDiv.className = 'gallery-text';
+                textDiv.innerHTML = `<p>${customText}</p>`;
+                itemDiv.appendChild(textDiv);
+            }
             galleryContainer.appendChild(itemDiv);
         }
     }
