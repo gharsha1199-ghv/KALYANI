@@ -521,7 +521,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentSceneId = 'scene-opening';
     const bgMusic = document.getElementById('bg-music');
     let isMusicPlaying = false;
-
+    
     // --- Intro Overlay Sequence ---
     const introOverlay = document.getElementById('birthday-intro');
     const mainPage = document.getElementById('birthday-page');
@@ -981,6 +981,13 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById('success-overlay').classList.add('hidden');
         sceneCake.classList.remove('active');
         sceneGallery.classList.add('active');
+        
+        // Pause music when entering gallery
+        if (bgMusic) {
+            bgMusic.pause();
+            isMusicPlaying = false;
+        }
+        
         populateGallery();
     });
 
@@ -988,6 +995,37 @@ document.addEventListener("DOMContentLoaded", () => {
         btnBackGallery.addEventListener('click', () => {
             sceneGallery.classList.remove('active');
             sceneCake.classList.add('active');
+        });
+    }
+
+    // --- Final Surprise Navigation ---
+    const btnFinalSurprise = document.getElementById('btn-final-surprise');
+    const sceneFinal = document.getElementById('scene-final');
+    const btnBackToGallery = document.getElementById('btn-back-to-gallery');
+
+    if (btnFinalSurprise && sceneFinal) {
+        btnFinalSurprise.addEventListener('click', () => {
+            sceneGallery.classList.remove('active');
+            sceneFinal.classList.add('active');
+            
+            // Try to autoplay the video when entering the final scene
+            const finalVideo = document.getElementById('final-video');
+            if (finalVideo) {
+                finalVideo.play().catch(e => console.log("Video autoplay prevented", e));
+            }
+        });
+    }
+
+    if (btnBackToGallery && sceneFinal) {
+        btnBackToGallery.addEventListener('click', () => {
+            sceneFinal.classList.remove('active');
+            sceneGallery.classList.add('active');
+            
+            // Pause the video when leaving the scene
+            const finalVideo = document.getElementById('final-video');
+            if (finalVideo) {
+                finalVideo.pause();
+            }
         });
     }
 
