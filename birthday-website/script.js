@@ -1053,7 +1053,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (galleryPopulated) return;
         galleryPopulated = true;
         
-        const totalImages = 470;
+        const totalImages = 471;
         
         // Create two sub-containers
         const gridContainer = document.createElement('div');
