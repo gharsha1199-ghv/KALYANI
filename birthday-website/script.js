@@ -762,6 +762,32 @@ document.addEventListener("DOMContentLoaded", () => {
     createParticles();
 
     // --- Navigation ---
+    const btnGlobalBack = document.getElementById('btn-global-back');
+
+    if (btnGlobalBack) {
+        btnGlobalBack.addEventListener('click', () => {
+            if (document.getElementById('scene-cake').classList.contains('active')) {
+                document.getElementById('scene-cake').classList.remove('active');
+                document.getElementById('scene-opening').classList.add('active');
+                btnGlobalBack.classList.add('hidden');
+                const particlesBg = document.getElementById('particles-bg');
+                if (particlesBg) particlesBg.classList.remove('hidden');
+            } else if (document.getElementById('scene-gallery').classList.contains('active')) {
+                document.getElementById('scene-gallery').classList.remove('active');
+                document.getElementById('scene-cake').classList.add('active');
+                if (!isMusicPlaying && bgMusic) {
+                    bgMusic.play().catch(e => {});
+                    isMusicPlaying = true;
+                }
+            } else if (document.getElementById('scene-final').classList.contains('active')) {
+                document.getElementById('scene-final').classList.remove('active');
+                document.getElementById('scene-gallery').classList.add('active');
+                const finalVideo = document.getElementById('final-video');
+                if (finalVideo) finalVideo.pause();
+            }
+        });
+    }
+
     document.getElementById('btn-start').addEventListener('click', () => {
         if (!isMusicPlaying) {
             bgMusic.play().catch(e => console.log("Audio play prevented"));
@@ -770,6 +796,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
         document.getElementById('scene-opening').classList.remove('active');
         document.getElementById('scene-cake').classList.add('active');
+        if (btnGlobalBack) btnGlobalBack.classList.remove('hidden');
         
         const particlesBg = document.getElementById('particles-bg');
         if (particlesBg) particlesBg.classList.add('hidden');
@@ -789,8 +816,14 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- Cake Cutting Logic ---
     const knife = document.getElementById('realistic-knife');
     const cakeWrapper = document.getElementById('cake-wrapper');
+    const cakeContainer = cakeWrapper.parentElement; // The container to shake
     const cakePiecesContainer = document.getElementById('cake-pieces');
     let cakeCut = false;
+
+    // Create flash overlay
+    const cutFlash = document.createElement('div');
+    cutFlash.className = 'cut-flash';
+    document.body.appendChild(cutFlash);
 
     initKnifeDrag();
 
@@ -799,6 +832,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let startX, startY;
         let initialLeft, initialTop;
         let cutsMade = 0;
+        let isShaking = false;
 
         const onPointerDown = (e) => {
             if (cakeCut) return;
@@ -837,9 +871,27 @@ document.addEventListener("DOMContentLoaded", () => {
             if (isIntersecting(knifeRect, cakeRect)) {
                 if (dist > 2) {
                     cutsMade++;
-                    if (cutsMade > 15) {
+                    
+                    // Create Sparks
+                    createKnifeSpark(e.clientX, e.clientY);
+                    
+                    // Add shake effect
+                    if (!isShaking) {
+                        cakeContainer.classList.add('shaking');
+                        isShaking = true;
+                        playSliceSound();
+                    }
+
+                    if (cutsMade > 20) {
+                        cakeContainer.classList.remove('shaking');
+                        isShaking = false;
                         finishCakeCut();
                     }
+                }
+            } else {
+                if (isShaking) {
+                    cakeContainer.classList.remove('shaking');
+                    isShaking = false;
                 }
             }
         };
@@ -847,6 +899,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const onPointerUp = (e) => {
             isDragging = false;
             knife.releasePointerCapture(e.pointerId);
+            if (isShaking) {
+                cakeContainer.classList.remove('shaking');
+                isShaking = false;
+            }
             if (!cakeCut) {
                 knife.style.transform = `translate(0px, 0px)`;
                 cutsMade = 0;
@@ -859,11 +915,97 @@ document.addEventListener("DOMContentLoaded", () => {
         knife.addEventListener('pointercancel', onPointerUp);
     }
 
+    function createKnifeSpark(x, y) {
+        const spark = document.createElement('div');
+        spark.className = 'knife-spark';
+        spark.style.left = x + 'px';
+        spark.style.top = y + 'px';
+        
+        // Random trajectory
+        const angle = Math.random() * Math.PI * 2;
+        const velocity = Math.random() * 50 + 20;
+        const tx = Math.cos(angle) * velocity;
+        const ty = Math.sin(angle) * velocity;
+        
+        spark.style.setProperty('--tx', tx + 'px');
+        spark.style.setProperty('--ty', ty + 'px');
+        
+        document.body.appendChild(spark);
+        setTimeout(() => spark.remove(), 600);
+    }
+
+    function playSliceSound() {
+        try {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            const ctx = new AudioContext();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(800, ctx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(100, ctx.currentTime + 0.1);
+            gain.gain.setValueAtTime(0.05, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.1);
+            osc.start();
+            osc.stop(ctx.currentTime + 0.1);
+        } catch(e) {}
+    }
+
+    function playBurstSound() {
+        try {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            const ctx = new AudioContext();
+            
+            // Boom
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.type = 'square';
+            osc.frequency.setValueAtTime(150, ctx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(40, ctx.currentTime + 0.3);
+            gain.gain.setValueAtTime(0.5, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+            osc.start();
+            osc.stop(ctx.currentTime + 0.3);
+            
+            // Sparkle chime
+            const osc2 = ctx.createOscillator();
+            const gain2 = ctx.createGain();
+            osc2.connect(gain2);
+            gain2.connect(ctx.destination);
+            osc2.type = 'sine';
+            osc2.frequency.setValueAtTime(1200, ctx.currentTime);
+            osc2.frequency.linearRampToValueAtTime(2000, ctx.currentTime + 0.1);
+            gain2.gain.setValueAtTime(0.1, ctx.currentTime);
+            gain2.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
+            osc2.start();
+            osc2.stop(ctx.currentTime + 0.5);
+            
+        } catch(e) {}
+    }
+
     function finishCakeCut() {
         cakeCut = true;
         cakeWrapper.classList.add('hidden');
         cakePiecesContainer.classList.remove('hidden');
-        
+
+        // Flash screen
+        cutFlash.classList.add('active');
+        setTimeout(() => cutFlash.classList.remove('active'), 50);
+
+        // Sound
+        playBurstSound();
+
+        // Confetti
+        if (typeof confetti === 'function') {
+            confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 }, colors: ['#ff2a75', '#ffffff', '#d4af37'] });
+        }
+
+        // Extinguish candles (go right animation)
+        document.querySelectorAll('#cake-pieces .candle').forEach(c => c.classList.add('extinguished'));
+
         // Add separation animation
         setTimeout(() => {
             for(let i=1; i<=8; i++) {
@@ -999,6 +1141,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById('success-overlay').classList.add('hidden');
         sceneCake.classList.remove('active');
         sceneGallery.classList.add('active');
+        if (btnGlobalBack) btnGlobalBack.classList.remove('hidden');
         
         // Pause music when entering gallery
         if (bgMusic) {
@@ -1025,6 +1168,7 @@ document.addEventListener("DOMContentLoaded", () => {
         btnFinalSurprise.addEventListener('click', () => {
             sceneGallery.classList.remove('active');
             sceneFinal.classList.add('active');
+            if (btnGlobalBack) btnGlobalBack.classList.remove('hidden');
             
             // Try to autoplay the video when entering the final scene
             const finalVideo = document.getElementById('final-video');

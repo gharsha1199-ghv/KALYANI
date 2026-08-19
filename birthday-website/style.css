@@ -28,6 +28,25 @@ body {
     height: 100vh;
 }
 
+/* --- Enhanced Cake Cutting Animations --- */
+.cake-container.shaking {
+    animation: cakeShake 0.3s cubic-bezier(.36,.07,.19,.97) infinite;
+}
+
+@keyframes cakeShake {
+    0% { transform: translate(0.5px, 0.5px) rotate(0deg); }
+    10% { transform: translate(-0.5px, -1px) rotate(0deg); }
+    20% { transform: translate(-1.5px, 0px) rotate(0deg); }
+    30% { transform: translate(1.5px, 1px) rotate(0deg); }
+    40% { transform: translate(0.5px, -0.5px) rotate(0deg); }
+    50% { transform: translate(-0.5px, 1px) rotate(0deg); }
+    60% { transform: translate(-1.5px, 0.5px) rotate(0deg); }
+    70% { transform: translate(1.5px, 0.5px) rotate(0deg); }
+    80% { transform: translate(-0.5px, -0.5px) rotate(0deg); }
+    90% { transform: translate(0.5px, 1px) rotate(0deg); }
+    100% { transform: translate(0.5px, -1px) rotate(0deg); }
+}
+
 /* Background Particles */
 .particles {
     position: absolute;
@@ -796,6 +815,13 @@ body {
 
 .final-surprise-wrapper button {
     box-shadow: 0 4px 15px rgba(255, 42, 117, 0.6);
+    background-color: var(--primary-pink);
+    color: var(--text-white);
+}
+
+.final-surprise-wrapper button:hover {
+    background-color: #ff4d8d;
+    box-shadow: 0 6px 20px rgba(255, 42, 117, 0.8);
 }
 
 .video-container {
@@ -1169,6 +1195,162 @@ body {
     z-index: 10;
 }
 
+@keyframes pulse-text {
+    0% { opacity: 0.5; transform: scale(0.95); }
+    100% { opacity: 1; transform: scale(1.05); }
+}
+
+/* Pop Animation */
+@keyframes balloon-blast {
+    0% { transform: scale(1); filter: brightness(1); }
+    40% { transform: scale(1.5); filter: brightness(1.5); }
+    100% { transform: scale(15); opacity: 0; filter: brightness(2); }
+}
+
+
+
+/* Particles */
+#intro-particles-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.intro-particle {
+    position: absolute;
+    pointer-events: none;
+    opacity: 0;
+    animation: pop-particle 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.8rem;
+    text-shadow: 0 0 5px rgba(255,255,255,0.5);
+    transform-origin: center center;
+}
+
+@keyframes pop-particle {
+    0% {
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
+        opacity: 1;
+    }
+    20% {
+        /* Burst outward */
+        transform: translate(calc(var(--tx) - 50%), calc(var(--ty) - 50%)) scale(1) rotate(180deg);
+        opacity: 1;
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        /* Fall down gracefully */
+        transform: translate(calc(var(--tx) + var(--drift) - 50%), 120vh) scale(0.8) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+.intro-flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    transition: transform 1.5s cubic-bezier(0.77, 0, 0.175, 1), opacity 1.2s ease-out;
+    box-shadow: inset 0 0 5px rgba(255, 77, 109, 0.2);
+}
+
+.flap-top {
+    background: linear-gradient(180deg, #fcd5ce, #ffb5a7);
+    clip-path: polygon(0 0, 100% 0, 50% 50%);
+    transform-origin: top center;
+}
+
+.flap-bottom {
+    background: linear-gradient(180deg, #ffb5a7, #f8edeb);
+    clip-path: polygon(0 100%, 50% 50%, 100% 100%);
+    transform-origin: bottom center;
+}
+
+.flap-left {
+    background: linear-gradient(90deg, #fcd5ce, #ffb5a7);
+    clip-path: polygon(0 0, 50% 50%, 0 100%);
+    transform-origin: left center;
+}
+
+.flap-right {
+    background: linear-gradient(90deg, #ffb5a7, #fcd5ce);
+    clip-path: polygon(100% 0, 50% 50%, 100% 100%);
+    transform-origin: right center;
+}
+
+/* 3D Fold the flaps away */
+#birthday-intro.hidden .flap-top {
+    transform: rotateX(120deg);
+    opacity: 0;
+}
+
+#birthday-intro.hidden .flap-bottom {
+    transform: rotateX(-120deg);
+    opacity: 0;
+}
+
+#birthday-intro.hidden .flap-left {
+    transform: rotateY(-120deg);
+    opacity: 0;
+}
+
+#birthday-intro.hidden .flap-right {
+    transform: rotateY(120deg);
+    opacity: 0;
+}
+
+
+/* Balloons Distributed Across Screen */
+#intro-balloons-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10;
+    transform: translateY(100vh);
+    transition: transform 2s ease-out;
+    cursor: pointer;
+}
+
+#intro-balloons-container.float-up {
+    transform: translateY(0);
+    animation: sway 3s ease-in-out infinite alternate;
+}
+
+.intro-balloon-wrapper {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.balloon-center { z-index: 5; transform: rotate(0deg) translateY(0px); }
+.balloon-left-1 { z-index: 4; transform: rotate(-15deg) translate(-60px, 40px); }
+.balloon-right-1 { z-index: 4; transform: rotate(15deg) translate(60px, 40px); }
+.balloon-left-2 { z-index: 3; transform: rotate(-25deg) translate(-110px, 90px); }
+.balloon-right-2 { z-index: 3; transform: rotate(25deg) translate(110px, 90px); }
+
+#intro-balloons-container .balloon-instruction {
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 250px;
+    text-align: center;
+    z-index: 10;
+}
+
 #intro-balloons-container.popped {
     pointer-events: none;
 }
@@ -1176,3 +1358,33 @@ body {
     animation: balloon-blast 0.25s cubic-bezier(0.25, 1, 0.5, 1) forwards;
 }
 
+/* Spark Particles */
+.knife-spark {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: #ffd700;
+    border-radius: 50%;
+    pointer-events: none;
+    box-shadow: 0 0 10px 2px rgba(255, 215, 0, 0.8), 0 0 5px #fff;
+    z-index: 100;
+    animation: spark-fly 0.6s ease-out forwards;
+}
+@keyframes spark-fly {
+    0% { transform: translate(0, 0) scale(1); opacity: 1; }
+    100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
+}
+/* Background flash for the cut */
+.cut-flash {
+    position: fixed;
+    inset: 0;
+    background: #fff;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 1000;
+    transition: opacity 0.5s ease-out;
+}
+.cut-flash.active {
+    opacity: 0.8;
+    transition: opacity 0.05s ease-in;
+}
