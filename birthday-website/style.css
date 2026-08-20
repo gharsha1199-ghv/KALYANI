@@ -1548,3 +1548,58 @@ body {
     position: relative;
     z-index: 2;
 }
+
+/* --- Mobile Responsiveness --- */
+@media (max-width: 768px) {
+    .title-serif {
+        font-size: 2.5rem;
+    }
+    .name-cursive {
+        font-size: 5rem;
+    }
+    .split-layout {
+        flex-direction: column;
+    }
+    .left-col, .right-col {
+        padding: 0 20px;
+        flex: none;
+        height: 50vh;
+    }
+    .family-row {
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+    .portrait-glow {
+        width: 80px;
+        height: 80px;
+    }
+    .cake-container, .css-cake {
+        width: 250px;
+        height: 250px;
+    }
+    .action-area {
+        flex-direction: column;
+        gap: 30px;
+        margin-bottom: 40px;
+    }
+    .knife-tray-container {
+        width: 200px;
+        height: 80px;
+    }
+    #realistic-knife {
+        width: 160px;
+        height: 32px;
+    }
+    .gallery-header .title-serif {
+        font-size: 2rem;
+    }
+    .scene-cake-header {
+        margin-top: 40px;
+    }
+    #scene-final h2 {
+        font-size: 2rem !important;
+    }
+    #scene-final p {
+        font-size: 1rem !important;
+    }
+}
